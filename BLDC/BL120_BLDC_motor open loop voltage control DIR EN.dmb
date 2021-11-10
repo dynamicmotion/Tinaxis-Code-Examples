@@ -1,0 +1,28 @@
+mode=4 'BLDC open loop 
+v_rmp_r =30 'voltage slope V/s
+
+i_max=2500
+m=-1
+
+:loop
+v=in1
+v=(in1*v_pow)/4800 'IN 0 to 4.8V -> PWM 0...100%
+'if v>v_pow then v=v_pow
+if in3=1 then v=0
+if in2<>m then gosub :inv
+if m=1 then v=-v
+mot_v=v
+
+'pause 10 'optionnayl slow down the loop
+'print "voltage=",mot_v, " current=",i_mot 'optionnaly print some measures
+goto :loop
+
+:inv 'when inverting, stop the motor 1/2 second
+m=in2
+mode=1
+pause 500
+v=0
+mode=4
+return
+
+

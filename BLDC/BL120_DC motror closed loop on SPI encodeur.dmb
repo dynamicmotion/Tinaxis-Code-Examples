@@ -1,0 +1,52 @@
+'this example is designed for using Magnetic encoder on SSI(SPI) connector
+' On BL120 the SSI connector is COM3 (1024 points encoder, family ENCOD1024)
+
+'*** setup encoder reading ***
+com3cfg=12 'start using SPI encoder on COM3
+'com3sta is the register for encoder position reading
+
+'*** setup movement type ***
+mode=8 'Positionning mode
+amp_md=10 'ampli mode: DC motor
+
+'*** setup PID parameters ***
+pid1_is="com3sta" 'PID input 1 is the encoder
+pid1_p=25 'PID P gain
+
+'*** setup motor limitations ***
+max_mot=12000 'Max motor voltage 12V
+i_max=1000 'max current 1000mA
+
+'*** setup Trajectory parameters ***
+ tr_er_m = 2048 'tracking error max 2048 encoder pts = 2 turns
+ trj_res=1024 'Trajectory generator resolution (should match encoder)
+ tr_chki="com3sta" 'vector for tracking error checking
+ 
+ m_sp_p=500 'positive speed
+ m_sp_n=2000 'neg speed
+ 
+'*** optional setup graph for interface *** 
+ osc_1="pos_tar" 'setup the graph curve 1
+ osc_2="com3sta" 'graph curve 2
+ osc_t=50 'start recording at 50ms/sample
+
+ '*** end of setups. Start application ***
+ print "start demo movement"
+ 1
+ target=100000 'new position target
+ acc=100 'acceleration
+ dec=100
+ print "forward"
+ pause 'wait "target" reached
+ acc=500
+ dec=500
+ target=0
+ print "go back faster"
+ pause 
+ pause 1000 'wait 1 second more
+ goto 1
+ 
+
+
+
+

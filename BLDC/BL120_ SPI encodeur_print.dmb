@@ -1,0 +1,11 @@
+'this example is designed for using Magnetic encoder on SSI(SPI) connector
+' On BL120 the SSI connector is COM3 (1024 points encoder, family ENCOD1024)
+
+'*** setup encoder reading ***
+com3cfg=12 'start using SPI encoder on COM3
+'com3sta is the register for encoder position reading
+
+:loop
+print "encoder= ",com3sta
+pause 100
+goto :loop

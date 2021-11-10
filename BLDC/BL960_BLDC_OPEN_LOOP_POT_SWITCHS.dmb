@@ -1,0 +1,30 @@
+'this example demonstrate how to run BLDC motor, open-loop, controlled by switchs
+
+i_max=40000 'max current 40A (40000mA)
+v=4500 ' voltage equivalent to maximum speed
+w=24000 'max output voltage 24V (=24000 mV)
+v_rmp_r=500 'ramp of 500 V/sec 
+
+:label1 'create a label to jump here later
+a=in1-100
+if a<0 then a=0 'saturate input voltage
+if a>v then a=v 
+
+if in2=1 then if mode <> 4 then mode=4 'read enable input and change motor to energized if active
+if in2=0 then if mode <> 2 then mode=2 'mode disconnected
+
+if in3=1 then a=-a 'read direction input and apply change
+mot_v= (a*w)/v 'send calculated value to motor
+
+'just for demo, switch LEDs on outputs according current measured
+if i_mot>10000 then out1=1
+else out1=0	
+
+if i_mot>20000 then out2=1
+else out2=0	
+
+if i_mot>30000 then out3=1
+else out3=0	
+pause 10
+goto :label1 'jump to the label, and loop forever
+

@@ -1,0 +1,38 @@
+'this example is designed for using high resolution encoder (5000 lines)
+mode=8 'Positionning mode
+pid1_is="pos_xen" 'PID input 1 is the encoder
+pid1_p=25 'PID P gain
+amp_md=10 'ampli mode: DC motor
+
+max_mot=12000 'Max motor voltage 12V
+i_max=1000 'max current 1000mA
+
+ tr_er_m = 10000 'tracking error max 10000 encoder pts
+ trj_res=5000 'Trajectory generator resolution (should match encoder)
+ tr_chki="pos_xen" 'vector for tracking error checking
+ 
+ m_sp_p=500 'positive speed
+ m_sp_n=2000 'neg speed
+ 
+ osc_1="pos_tar" 'setup the graph
+ osc_2="pos_xen"
+ osc_t=50 'start recording at 50ms/sample
+
+ print "start demo movement"
+ 1
+ target=100000 'new position target
+ acc=100 'acceleration
+ dec=100
+ print "forward"
+ pause 'wait "target" reached
+ acc=500
+ dec=500
+ target=0
+ print "go back faster"
+ pause 
+ goto 1
+ 
+
+
+
+
